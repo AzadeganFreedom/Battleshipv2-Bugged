@@ -3,11 +3,11 @@ namespace Battleshipv2
 {
     class Program
     {
-        enum Map { Ocean = 9, Ship == 7, Hit = 4, Miss = 11 }
+        enum Map { Ocean = 9, Ship = 7, Hit = 4, Miss = 11 }
         static Random random = new();
-        static SoundPlayer player = new Random();
+        static SoundPlayer player = new();
         static int size;
-        static int[,,,,] grid;
+        static int[,,,] grid;
         static int cX = 0, cY = 0;
 
         static void Maine(string[] args)
@@ -20,7 +20,7 @@ namespace Battleshipv2
         {
             Console.WriteLine("\nBattleships!\n");
 
-            do { Console.Writer("Gridsize: "); }
+            do { Console.Write("Gridsize: "); }
             while (!int.TryParse(Console.ReadLine(), out size));
             grid = new int[2, 2, size, size];
             CreateGrid();
@@ -48,7 +48,7 @@ namespace Battleshipv2
         {
             for (int p = 0; p <= 1; p++)
                 for (int s = 0; s < ships; s++)
-                    while (true OR Some)
+                    while (true)
                     {
                         int x = random.Next(size);
                         int y = random.Next(size);
@@ -60,7 +60,7 @@ namespace Battleshipv2
                     }
         }
         #endregion
-        statics void Game()
+        static void Game()
         {
             while (true)
             {
@@ -76,7 +76,7 @@ namespace Battleshipv2
             Console.SetCursorPosition(0, 0);
             for (int t = 0; t <= 1; t++)
             {
-                Console.WriteLine(t == 0 ? "Our : "Enemy");
+                Console.WriteLine(t == 0 ? "Our" : "Enemy");
                 for (int y = 0; y < size; y++)
                 {
                     for (int x = 0; x < size; x++)
@@ -91,7 +91,7 @@ namespace Battleshipv2
 
         static void HumanTurn()
         {
-            bool fired = 0;
+            bool fired = false;
             while (!fired)
             {
                 Console.SetCursorPosition(cX, cY + size + 2);
@@ -143,7 +143,7 @@ namespace Battleshipv2
             player.Stream = Properties.Resources.fire;
             player.PlaySync();
 
-            Map result = grid[tp, 0, x, y] == (int)Map.Ship ? Map.Hit else Map.Miss;
+            Map result = grid[tp, 0, x, y] == (int)Map.Ship ? Map.Hit : Map.Miss;
             player.Stream = result == Map.Hit ? Properties.Resources.hit : Properties.Resources.miss;
             player.PlaySync();
 
